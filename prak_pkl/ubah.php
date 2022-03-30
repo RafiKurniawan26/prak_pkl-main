@@ -1,24 +1,25 @@
 <?php
-require "function.php";
+require 'functions.php';
 
-if (isset($_POST["tambahBuku"])) {
-    if (tambahBuku($_POST) > 0) {
+$id = $_GET["id"];
+$buku = ("SELECT * FROM mahasiswa WHERE id = $id")[0];
+
+
+if (isset($_POST["ubah"])) {
+    if (ubah($_POST) > 0) {
         echo "<script>
-				alert('data berhasil ditambahkan!');
-				document.location.href = 'buku.php';
+				alert('data berhasil diubah!');
+				document.location.href = 'index.php';
 			  </script>";
     } else {
         echo "<script>
-				alert('data gagal ditambahkan!');
-				document.location.href = 'buku.php';
+				alert('data gagal diubah!');
+				document.location.href = 'index.php';
 			  </script>";
     }
 }
-
-$sql = "SELECT * FROM `kategori`";
-$all_categories = mysqli_query($conn, $sql);
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +40,7 @@ $all_categories = mysqli_query($conn, $sql);
             <input type="text" name="Idbuku" id="Idbuku"> <br>
 
             <label for="IdKategori">Kategori</label><br>
-            <select name="Idkategori">
+            <select name="Idkategori" value="<?php echo $buku["nrp"]; ?>">
                 <?php
                 // use a while loop to fetch data 
                 // from the $all_categories variable 
@@ -63,16 +64,16 @@ $all_categories = mysqli_query($conn, $sql);
             </select>
 
             <label for="judul">Judul</label><br>
-            <input type="text" name="judul" id="judul"><br>
+            <input type="text" name="judul" id="judul" value="<?php echo $buku["judul"]; ?>"><br>
 
             <label for="pengarang">Pengarang</label><br>
-            <input type="text" name="pengarang" id="pengarang"><br>
+            <input type="text" name="pengarang" id="pengarang" value="<?php echo $buku["pengarang"]; ?>"><br>
 
             <label for="penerbit">Penerbit</label><br>
-            <input type="text" name="penerbit" id="penerbit"><br>
+            <input type="text" name="penerbit" id="penerbit" value="<?php echo $buku["penerbit"]; ?>"><br>
 
             <label for="deskripsi">Deskripsi</label><br>
-            <input type="text" name="deskripsi" id="deskripsi"><br>
+            <input type="text" name="deskripsi" id="deskripsi" value="<?php echo $buku["deskripsi"]; ?>"><br>
 
             <input type="submit" name="tambahBuku" value="Submit">
             <button><a href="buku.php">BACK</a></button>
